@@ -2,17 +2,17 @@ import * as ts from 'typescript'
 import { CompletionItemBuilder } from '../completionItemBuilder'
 import { BaseExpressionTemplate } from './baseTemplates'
 
-export class ConsoleTemplate extends BaseExpressionTemplate {
+export class PrintTemplate extends BaseExpressionTemplate {
 
-  constructor(private level: 'log' | 'warn' | 'error') {
+  constructor(private level: 'print') {
     super()
   }
 
   buildCompletionItem(node: ts.Node, indentSize?: number) {
     return CompletionItemBuilder
       .create(this.level, node, indentSize)
-      .description(`console.${this.level}(expr)`)
-      .replace(`console.${this.level}({{expr}})`)
+      .description(`${this.level}(expr)`)
+      .replace(`${this.level}({{expr}})`)
       .build()
   }
 
@@ -29,7 +29,5 @@ export class ConsoleTemplate extends BaseExpressionTemplate {
 }
 
 export const build = () => [
-  new ConsoleTemplate('log'),
-  new ConsoleTemplate('warn'),
-  new ConsoleTemplate('error')
+  new PrintTemplate('print'),
 ]

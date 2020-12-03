@@ -4,23 +4,23 @@ import { BaseExpressionTemplate } from './baseTemplates'
 
 export class CastTemplate extends BaseExpressionTemplate {
 
-  constructor (private keyword: 'cast' | 'castas') {
+  constructor (private keyword: 'castas' | 'castis') {
     super()
   }
 
   buildCompletionItem(node: ts.Node, indentSize?: number) {
     const completionitembuilder = CompletionItemBuilder.create(this.keyword, node, indentSize)
 
-    if (this.keyword === 'castas') {
+    if (this.keyword === 'castis') {
       return completionitembuilder
         .description(`(expr as SomeType)`)
-        .replace('({{expr}} as $1)$0', true)
+        .replace('{{expr}} is $1$0', true)
         .build()
     }
 
     return completionitembuilder
-      .description(`(<SomeType>expr)`)
-      .replace('(<$1>{{expr}})$0', true)
+      .description(`expr as SomeType`)
+      .replace('{{expr}} as $1$0', true)
       .build()
   }
 
@@ -30,6 +30,6 @@ export class CastTemplate extends BaseExpressionTemplate {
 }
 
 export const build = () => [
-  new CastTemplate('cast'),
-  new CastTemplate('castas')
+  new CastTemplate('castas'),
+  new CastTemplate('castis')
 ]

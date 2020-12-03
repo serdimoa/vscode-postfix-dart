@@ -3,15 +3,16 @@ import { CompletionItemBuilder } from '../completionItemBuilder'
 import { BaseExpressionTemplate } from './baseTemplates'
 
 export class VarTemplate extends BaseExpressionTemplate {
-  constructor(private keyword: 'var' | 'let' | 'const') {
+  constructor(private keyword: 'var' | 'varType' | 'const') {
     super()
   }
 
   buildCompletionItem(node: ts.Node, indentSize?: number) {
+    const replacer = this.keyword=="varType"?'${1:type} ${2:name} = {{expr}}$0': this.keyword + ' ${1:name} = {{expr}}$0';
     return CompletionItemBuilder
       .create(this.keyword, node, indentSize)
       .description(`${this.keyword} name = expr`)
-      .replace(this.keyword + ' ${1:name} = {{expr}}$0', true)
+      .replace(replacer, true)
       .build()
   }
 
@@ -26,6 +27,6 @@ export class VarTemplate extends BaseExpressionTemplate {
 
 export const build = () => [
   new VarTemplate('var'),
-  new VarTemplate('let'),
+  new VarTemplate('varType'),
   new VarTemplate('const')
 ]

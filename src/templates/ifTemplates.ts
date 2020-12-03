@@ -92,10 +92,6 @@ export class IfTypeofEqualityTemplate extends BaseIfElseTemplate {
 export const build = () => [
   new IfTemplate(),
   new ElseTemplate(),
-  new IfEqualityTemplate('null', '===', null),
-  new IfEqualityTemplate('notnull', '!==', null),
-  new IfEqualityTemplate('undefined', '===', undefined, true),
-  new IfEqualityTemplate('notundefined', '!==', undefined, true),
-  new IfTypeofEqualityTemplate('undefined', '===', undefined),
-  new IfTypeofEqualityTemplate('notundefined', '!==', undefined)
+  new IfEqualityTemplate('null', '==', null),
+  new IfEqualityTemplate('notnull', '!=', null),
 ]
