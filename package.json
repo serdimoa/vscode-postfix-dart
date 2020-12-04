@@ -2,7 +2,7 @@
 	"name": "vscode-postfix-dart",
 	"displayName": "Dart postfix completion",
 	"description": "Postfix templates for Dart",
-	"version": "1.9.3",
+	"version": "1.9.4",
 	"license": "MIT",
 	"publisher": "SerDimoa",
 	"engines": {
@@ -21,7 +21,7 @@
 		"url": "https://github.com/serdimoa/vscode-postfix-dart/issues"
 	},
 	"activationEvents": [
-		"onLanguage:postfix"
+		"*"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
@@ -74,12 +74,7 @@
 					}
 				}
 			}
-		},
-		"languages": [
-			{
-				"id": "postfix"
-			}
-		]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "tsc -p ./",
