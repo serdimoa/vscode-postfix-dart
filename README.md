@@ -1,32 +1,17 @@
-# vscode-postfix-ts
+# vscode-postfix-dart
 
-[![MarketPlace Tag](https://vsmarketplacebadge.apphb.com/version-short/ipatalas.vscode-postfix-ts.svg)](https://marketplace.visualstudio.com/items?itemName=ipatalas.vscode-postfix-ts)
-[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/ipatalas.vscode-postfix-ts)](https://marketplace.visualstudio.com/items?itemName=ipatalas.vscode-postfix-ts)
-[![Build Status](https://travis-ci.org/ipatalas/vscode-postfix-ts.svg?branch=master)](https://travis-ci.org/ipatalas/vscode-postfix-ts)
-[![codecov](https://codecov.io/gh/ipatalas/vscode-postfix-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/ipatalas/vscode-postfix-ts)
+[![MarketPlace Tag](https://vsmarketplacebadge.apphb.com/version-short/SerDimoa.vscode-postfix-dart.svg)](https://marketplace.visualstudio.com/items?itemName=SerDimoa.vscode-postfix-dart)
+[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/SerDimoa.vscode-postfix-dart)](https://marketplace.visualstudio.com/items?itemName=SerDimoa.vscode-postfix-dart)
 
-[![Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-$4-orange?logo=buy-me-a-coffee&style=flat)](https://www.buymeacoffee.com/0t1sqOM)
 
-> Postfix templates for TypeScript/JavaScript
+> Postfix templates for Dart
 
 ## Features
 
 This extension features postfix templates that can be used to improve productivity.
-It's been inspired on former, great [R# extension](https://github.com/controlflow/resharper-postfix)
+It's been inspired on former, great [TypeScript/JavaScript extension](https://github.com/ipatalas/vscode-postfix-ts).
 
-I find it annoying to jump the cursor back and forth whenever I want to perform some simple operations. This extension makes it easier. I use this feature on daily basis in C# but was missing it in JS/TS until now.
-
-A simple animation is worth more than words:
-
-![feature X](images/demo.gif)
-
-It also works pretty well with multiline expressions (v1.9.0+):
-
-![feature X](images/demo-multiline.gif)
-
-There is also a special handling for `.not` template which allows you to select specific expression to invert when having more options:
-
-![feature X](images/demo-not.gif)
+I find it annoying to jump the cursor back and forth whenever I want to perform some simple operations. This extension makes it easier. I use this feature on daily basis in C# but was missing it in Dart until now.
 
 All available templates (`expr` means the expression on which the template is applied):
 
@@ -36,22 +21,18 @@ All available templates (`expr` means the expression on which the template is ap
 | **.else**         | `if (!expr)` |
 | **.null**         | `if (expr === null)` |
 | **.notnull**      | `if (expr !== null)` |
-| **.undefined**    | `if (expr === undefined)` or `if (typeof expr === "undefined")` (see [settings](#Configuration)) |
-| **.notundefined** | `if (expr !== undefined)` or `if (typeof expr !== "undefined")` (see [settings](#Configuration))|
-| **.for**          | `for (let i = 0; i < expr.Length; i++)` |
-| **.forof**        | `for (let item of expr)` |
-| **.foreach**      | `expr.forEach(item => )` |
+| **.for**          | `for (var i = 0; i < expr.length; i++)` |
+| **.forin**        | `for (let item in expr)` |
+| **.foreach**      | `expr.forEach((item){} )` |
 | **.not**          | `!expr` |
 | **.return**       | `return expr` |
 | **.var**          | `var name = expr` |
-| **.let**          | `let name = expr` |
+| **.varType**          | `SomeType name = expr` |
 | **.const**        | `const name = expr` |
-| **.log**          | `console.log(expr)` |
-| **.error**        | `console.error(expr)` |
-| **.warn**         | `console.warn(expr)` |
-| **.cast**         | `(<SomeType>expr)` |
-| **.castas**       | `(expr as SomeType)` |
-| **.new**          | `new expr()` |
+| **.print**          | `print(expr)` |
+| **.castis**         | `expr is SomeType` |
+| **.castas**       | `expr as SomeTyp` |
+
 
 ## Custom templates (1.6.0 and above)
 
@@ -67,18 +48,18 @@ To configure a template you need to set `postfix.customTemplates` setting. It's 
 }
 ```
 
-`name` defines what will be the name of the suggestion  
-`description` will show additional optional description when suggestion panel is opened  
-`body` defines how the template will work (see below)  
-`when` defines conditions when the template should be suggested  
+`name` defines what will be the name of the suggestion
+`description` will show additional optional description when suggestion panel is opened
+`body` defines how the template will work (see below)
+`when` defines conditions when the template should be suggested
 
 ### Template body
 
-Template body defines how will the expression before the cursor be replaced.  
+Template body defines how will the expression before the cursor be replaced.
 It supports standard Visual Studio Code [Snippet syntax](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_snippet-syntax).
 There is also one special placeholder that can be used:
 
-- `{{expr}}`: this will be replaced by the expression on which the template is applied so for example `!{{expr}}` will simply negate the expression  
+- `{{expr}}`: this will be replaced by the expression on which the template is applied so for example `!{{expr}}` will simply negate the expression
 
 ### Template conditions
 
@@ -88,7 +69,6 @@ There is also one special placeholder that can be used:
 - `expression`: can be either a simple expression like `object.property.value` or `array[index]` or a combination of them
 - `binary-expression`: a binary expression, ie. `x > 3`, `x * 100`, `x && y`
 - `unary-expression`: an unary expression, ie. `!x`, `x++` or `++x`
-- `new-expression`: a new expression, ie. `new Type(arg1, arg2)`
 - `function-call`: a function call expression, ie. `func()`, `object.method()` and so on
 
 If no conditions are specified then given template will be available under all possible situations
@@ -97,11 +77,8 @@ If no conditions are specified then given template will be available under all p
 
 This plugin contributes the following [settings](https://code.visualstudio.com/docs/customization/userandworkspace):
 
-- `postfix.languages`: array of [language identifiers](https://code.visualstudio.com/docs/languages/identifiers) in which the extension will be available. Default value is  **['javascript', 'typescript', 'javascriptreact', 'typescriptreact']**
+- `postfix.languages`: array of [language identifiers](https://code.visualstudio.com/docs/languages/identifiers) in which the extension will be available. Default value is  **['dart']**
 - `postfix.customTemplates`: array of custom template definitions - see [Custom templates (1.6.0 and above)](#custom-templates-160-and-above)
-- `postfix.undefinedMode`: determines the behavior of `.undefined` and `.notundefined` templates, either equality comparison or typeof
-
-The `postfix.languages` setting can be used to make the extension available for inline JS/TS which is in other files like **.html**, **.vue** or others. You must still include `javascript` and `typescript` if you want the extension to be available there among the others.
 
 ## Known issues
 
