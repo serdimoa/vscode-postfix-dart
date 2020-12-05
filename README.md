@@ -19,8 +19,8 @@ All available templates (`expr` means the expression on which the template is ap
 | -------:          | ------- |
 | **.if**           | `if (expr)` |
 | **.else**         | `if (!expr)` |
-| **.null**         | `if (expr === null)` |
-| **.notnull**      | `if (expr !== null)` |
+| **.null**         | `if (expr == null)` |
+| **.notnull**      | `if (expr != null)` |
 | **.for**          | `for (var i = 0; i < expr.length; i++)` |
 | **.forin**        | `for (let item in expr)` |
 | **.foreach**      | `expr.forEach((item){} )` |
